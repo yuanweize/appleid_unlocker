@@ -12,11 +12,12 @@ jobs:
   sync_latest_from_upstream:
     name: Sync latest commits from upstream repo
     runs-on: ubuntu-latest
-    if: ${{ github.event.repository.fork  }}
 
     steps:
       - name: Checkout target repo
         uses: actions/checkout@v4
+        with:
+          ref: upstream
 
       - name: Sync upstream changes
         id: sync
@@ -24,7 +25,7 @@ jobs:
         with:
           upstream_sync_repo: pplulee/appleid_auto
           upstream_sync_branch: v2
-          target_sync_branch: backend
+          target_sync_branch: upstream
           target_repo_token: ${{ secrets.GITHUB_TOKEN  }}
 
       - name: New commits found
